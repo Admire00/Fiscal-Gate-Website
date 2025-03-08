@@ -1,0 +1,4437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiscal Gateway - Your Way To Tax Compliance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --primary-green: #10b981;
+            --dark-blue: #1e40af;
+            --light-blue: #dbeafe;
+            --light-gray: #f9fafb;
+            --white: #ffffff;
+            --black: #000000;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --text-color: #374151;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Enhanced Slideshow Background */
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: scale(1.05);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        /* Animated Particles Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        /* Hero Content */
+        .hero-container {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero-tagline {
+            color: var(--primary-green);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards 0.3s;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            background-color: rgba(16, 185, 129, 0.15);
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards 0.5s;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            color: var(--light-gray);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards 0.7s;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .highlight {
+            color: var(--primary-green);
+            font-weight: 500;
+        }
+
+        .hero-cta-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards 0.9s;
+        }
+
+        .hero-cta {
+            padding: 1.3rem 2.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .cta-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .cta-primary:hover {
+            background-color: var(--dark-blue);
+            border-color: var(--dark-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.5);
+        }
+
+        .cta-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards 1.2s, bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-indicator i {
+            color: var(--white);
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        /* Animation for text elements */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating Elements Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            position: relative;
+            z-index: 10;
+            margin-top: -100px;
+            padding: 0 2rem;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .stat-item:nth-child(3), .stat-item:nth-child(4) {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .stats-section {
+                margin-top: -50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hero-description {
+                font-size: 1.2rem;
+            }
+
+            .hero-cta-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-cta {
+                padding: 1.1rem 2.2rem;
+                font-size: 1rem;
+                width: 80%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .stat-item {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .stat-item:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+
+            .hero-tagline {
+                font-size: 1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .stats-section {
+                margin-top: -30px;
+            }
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode nav {
+            background-color: rgba(31, 41, 55, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .logo-text {
+            color: #60a5fa;
+        }
+
+        body.dark-mode .nav-links a {
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .mobile-nav {
+            background-color: rgba(31, 41, 55, 0.98);
+        }
+
+        body.dark-mode .theme-toggle,
+        body.dark-mode .hamburger,
+        body.dark-mode .hamburger:before,
+        body.dark-mode .hamburger:after {
+            color: #e5e7eb;
+            background-color: #e5e7eb;
+        }
+
+        body.dark-mode .mobile-menu-btn.active .hamburger {
+            background-color: transparent;
+        }
+
+        body.dark-mode .stats-container {
+            background: rgba(31, 41, 55, 0.95);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .stat-label {
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .stat-item {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+ <!-- HTML for the Navigation Bar -->
+<!-- Navigation -->
+<nav id="navbar">
+    <div class="nav-container" id="navContainer">
+        <div class="logo">
+            <img src="img/logo.png" alt="Fiscal Gateway Logo" class="logo-img">
+            <span class="logo-text">FISCAL GATEWAY</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#integrations">Integrations</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Get Started <i class="fas fa-arrow-right"></i></button>
+        
+        <!-- Wrap the buttons in a container -->
+        <div class="nav-buttons">
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span class="hamburger"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#integrations">Integrations</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="mobile-cta">Get Started <i class="fas fa-arrow-right"></i></button>
+</div>
+
+
+<!-- CSS for the Navigation Bar -->
+<style>
+/* Navigation */
+
+nav {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    padding: 0.5rem 0;
+}
+
+nav.scrolled {
+    padding: 0.3rem 0;
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1001;
+}
+
+.logo-img {
+    height: 45px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2563eb;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    letter-spacing: 0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-links a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #10b981;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateX(-50%);
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+
+.nav-links a:hover:after {
+    width: 100%;
+}
+
+.nav-cta {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 0.75rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 2px solid #2563eb;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+}
+
+.nav-cta:hover {
+    background-color: transparent;
+    color: #2563eb;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #374151;
+    margin-left: 1rem;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0;
+}
+
+.theme-toggle:hover {
+    background-color: #dbeafe;
+    color: #2563eb;
+    transform: rotate(15deg);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #2563eb;
+    z-index: 1001;
+    width: 50px;
+    height: 50px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    margin-left: 0px;
+}
+
+.mobile-menu-btn:hover {
+    background-color: #dbeafe;
+}
+
+.hamburger {
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background-color: #2563eb;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hamburger:before,
+.hamburger:after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: #2563eb;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hamburger:before {
+    transform: translateY(-8px);
+}
+
+.hamburger:after {
+    transform: translateY(8px);
+}
+
+.mobile-menu-btn.active .hamburger {
+    background-color: transparent;
+}
+
+.mobile-menu-btn.active .hamburger:before {
+    transform: rotate(45deg);
+}
+
+.mobile-menu-btn.active .hamburger:after {
+    transform: rotate(-45deg);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.mobile-nav.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    text-align: center;
+}
+
+.mobile-nav-links li {
+    margin: 2rem 0;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.mobile-nav.active .mobile-nav-links li {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mobile-nav.active .mobile-nav-links li:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.mobile-nav.active .mobile-nav-links li:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.mobile-nav.active .mobile-nav-links li:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.mobile-nav.active .mobile-nav-links li:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.mobile-nav.active .mobile-nav-links li:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.mobile-nav-links a {
+    text-decoration: none;
+    color: #374151;
+    font-size: 1.8rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    padding: 0.5rem 2rem;
+    display: inline-block;
+}
+
+.mobile-nav-links a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #10b981;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateX(-50%);
+}
+
+.mobile-nav-links a:hover {
+    color: #2563eb;
+}
+
+.mobile-nav-links a:hover:after {
+    width: 80%;
+}
+
+.mobile-cta {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: 2px solid #2563eb;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+}
+
+.mobile-nav.active .mobile-cta {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.6s;
+}
+
+.mobile-cta:hover {
+    background-color: transparent;
+    color: #2563eb;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .nav-links, .nav-cta {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        margin-left: 0;
+    }
+    
+    .theme-toggle {
+        display: flex;
+        margin-right: 10px;
+    }
+    
+    .nav-container {
+        justify-content: space-between;
+    }
+    
+    .nav-buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-left: auto;
+    }
+
+    .theme-toggle,
+    .mobile-menu-btn {
+        margin: 0 !important;
+    }
+}
+
+/* Dark Mode Styles for Navigation */
+body.dark-mode nav {
+    background-color: rgba(31, 41, 55, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .logo-text {
+    color: #60a5fa;
+}
+
+body.dark-mode .nav-links a {
+    color: #e5e7eb;
+}
+
+body.dark-mode .mobile-nav {
+    background-color: rgba(31, 41, 55, 0.98);
+}
+
+body.dark-mode .theme-toggle,
+body.dark-mode .hamburger,
+body.dark-mode .hamburger:before,
+body.dark-mode .hamburger:after {
+    color: #e5e7eb;
+    background-color: #e5e7eb;
+}
+
+body.dark-mode .mobile-menu-btn.active .hamburger {
+    background-color: transparent;
+}
+</style>
+
+
+
+<!-- JavaScript for Navigation Functionality -->
+<script>
+// Navigation scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// Mobile menu toggle
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileNav = document.getElementById('mobileNav');
+
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+});
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('.mobile-nav-links a, .mobile-cta').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenuBtn.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    });
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            window.scrollTo({
+                top: targetSection.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('i');
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    if (document.body.classList.contains('dark-mode')) {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+    }
+});
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+}
+</script>
+
+
+
+
+    <!-- Hero Section with Animated Slideshow -->
+    <section class="hero" id="home">
+        <div id="particles-js"></div>
+        <div class="slideshow" id="heroSlideshow">
+            <!-- Slides will be added via JavaScript -->
+        </div>
+        <div class="hero-container" data-aos="fade-up">
+            <p class="hero-tagline"><i class="fas fa-check-circle"></i> Zimbabwe's Premier Tax Solution</p>
+            <h1 class="hero-title">Simplifying <span class="highlight">Tax Compliance</span> for Your Business</h1>
+            <div class="hero-cta-container">
+                <a href="#contact" class="hero-cta cta-primary"><i class="fas fa-calendar-check"></i> Schedule Demo</a>
+                <a href="#services" class="hero-cta cta-secondary"><i class="fas fa-info-circle"></i> Learn More</a>
+            </div>
+        </div>
+        <div class="scroll-indicator" id="scrollIndicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container" data-aos="fade-up">
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-building stat-icon"></i>
+                <h3 class="stat-number" data-count="25">0</h3>
+                <p class="stat-label">Businesses Served</p>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-file-invoice-dollar stat-icon"></i>
+                <h3 class="stat-number" data-count="100000">0</h3>
+                <p class="stat-label">Invoices Processed</p>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-clock stat-icon"></i>
+                <h3 class="stat-number" data-count="98">0</h3>
+                <p class="stat-label">% Uptime</p>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-thumbs-up stat-icon"></i>
+                <h3 class="stat-number" data-count="95">0</h3>
+                <p class="stat-label">% Customer Satisfaction</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+
+     
+
+    
+        // Scroll indicator click handler
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        scrollIndicator.addEventListener('click', () => {
+            const nextSection = document.querySelector('.stats-section');
+            window.scrollTo({
+                top: nextSection.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        });
+
+
+        // Hero slideshow functionality
+        const heroSlideshow = document.getElementById('heroSlideshow');
+        const slideImages = [
+            'img/back1.jpg',
+            'img/back2.jpg',
+            'img/back3.jpg'
+        ];
+        
+        // Create slides
+        slideImages.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.classList.add('slide');
+            slide.style.backgroundImage = `url(${image})`;
+            
+            if (index === 0) {
+                slide.classList.add('active');
+            }
+            
+            heroSlideshow.appendChild(slide);
+        });
+        
+        // Auto-rotate slides
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        
+        function rotateSlides() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(rotateSlides, 7000);
+
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#ffffff'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Animate stat counters
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let animatedStats = false;
+
+        function animateStats() {
+            if (animatedStats) return;
+            
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-count'));
+                const duration = 2000; // ms
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    const value = Math.min(Math.round(current), target);
+                    
+                    // Format with commas for large numbers
+                    stat.textContent = value.toLocaleString();
+                    
+                    if (value < target) {
+                        requestAnimationFrame(updateCounter);
+                    }
+                };
+                
+                updateCounter();
+            });
+            
+            animatedStats = true;
+        }
+
+        // Trigger stat counter animation when in viewport
+        const statsSection = document.querySelector('.stats-section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(statsSection);
+    </script>
+
+
+
+
+
+
+
+    <!-- Services Section with Interactive Cards -->
+<section class="services-section" id="services">
+    <div class="section-container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag"><i class="fas fa-cogs"></i> Our Solutions</span>
+            <h2 class="section-title">Comprehensive Tax Services</span></h2>
+            <p class="section-description">We offer a range of services designed to simplify tax compliance for businesses of all sizes in Zimbabwe.</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3 class="service-title">ZIMRA API Integration</h3>
+                <p class="service-description">Connect your existing accounting software directly to ZIMRA's Fiscalisation Device Management System (FDMS) API.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Real-time fiscal verification</li>
+                    <li><i class="fas fa-check-circle"></i> Automatic invoice registration</li>
+                    <li><i class="fas fa-check-circle"></i> Digital fiscal signature compliant</li>
+                </ul>
+                <button class="service-cta">Learn More</button>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="service-title">Tax Reporting Dashboard</h3>
+                <p class="service-description">Comprehensive analytics and reporting tools to monitor your tax compliance status and history.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Real-time compliance monitoring</li>
+                    <li><i class="fas fa-check-circle"></i> Custom report generation</li>
+                    <li><i class="fas fa-check-circle"></i> VAT and tax reconciliation</li>
+                </ul>
+                <button class="service-cta">Learn More</button>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="service-title">Compliance Management</h3>
+                <p class="service-description">Stay up-to-date with changing tax regulations and ensure your business remains fully compliant.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Regulatory updates</li>
+                    <li><i class="fas fa-check-circle"></i> Compliance audits</li>
+                    <li><i class="fas fa-check-circle"></i> Risk assessment</li>
+                </ul>
+                <button class="service-cta">Learn More</button>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="service-title">24/7 Technical Support</h3>
+                <p class="service-description">Our dedicated team is always available to help resolve any technical issues or answer your questions.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Multi-channel support</li>
+                    <li><i class="fas fa-check-circle"></i> Rapid response time</li>
+                    <li><i class="fas fa-check-circle"></i> Dedicated account manager</li>
+                </ul>
+                <button class="service-cta">Learn More</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<style>
+/* Enhanced Services Section Styles */
+.services-section {
+    padding: 120px 0;
+    background: linear-gradient(135deg, var(--light-gray) 0%, #f0f4ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.services-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.services-section::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--primary-green);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.6s 0.2s ease forwards;
+}
+
+.section-title .highlight {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+
+.section-title .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: rgba(16, 185, 129, 0.3);
+    z-index: -1;
+    transform: skew(-12deg);
+}
+
+.section-description {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--text-color);
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.6s 0.4s ease forwards;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+.service-card.animated {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+    z-index: -1;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 20px;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover::before {
+    height: 100%;
+}
+
+.service-card:hover .service-title,
+.service-card:hover .service-description,
+.service-card:hover .service-features li {
+    color: var(--white);
+}
+
+.service-card:hover .service-features i {
+    color: #a7f3d0 !important;
+}
+
+.service-card:hover .service-icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    transform: rotateY(180deg);
+}
+
+.service-card:hover .service-cta {
+    background-color: var(--white);
+    color: var(--primary-blue);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.service-icon::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: var(--primary-blue);
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+
+.service-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--primary-green);
+    transition: var(--transition);
+}
+
+.service-card:hover .service-title::after {
+    width: 60px;
+    background-color: var(--white);
+}
+
+.service-description {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    line-height: 1.6;
+}
+
+.service-features {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.service-features li {
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: var(--transition);
+    opacity: 0.9;
+}
+
+.service-features li:hover {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.service-features i {
+    color: var(--primary-green);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.service-cta {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.9rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.service-cta i {
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.service-cta:hover i {
+    transform: translateX(3px);
+}
+
+.service-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}
+
+.service-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.service-cta:hover::before {
+    left: 100%;
+}
+
+
+
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.float-animation {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles for Enhanced Sections */
+@media (max-width: 992px) {
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .contact-info {
+        padding-right: 0;
+    }
+    
+    .contact-info::after {
+        display: none;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .services-section,
+    .contact-section {
+        padding: 80px 0;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .service-card {
+        padding: 2rem;
+    }
+    
+    .contact-form-container {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-tag {
+        font-size: 0.9rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-description {
+        font-size: 1rem;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Dark Mode Styles for Enhanced Sections */
+body.dark-mode .services-section {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+body.dark-mode .section-title,
+body.dark-mode .service-title,
+body.dark-mode .form-title,
+body.dark-mode .contact-text h4,
+body.dark-mode .form-group label {
+    color: #e5e7eb;
+}
+
+body.dark-mode .section-description,
+body.dark-mode .service-description,
+body.dark-mode .contact-description,
+body.dark-mode .contact-text p {
+    color: #d1d5db;
+}
+
+body.dark-mode .service-card {
+    background-color: #2d3748;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .service-icon {
+    background-color: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .service-features i {
+    color: #10b981;
+}
+
+body.dark-mode .contact-form-container {
+    background-color: #2d3748;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .contact-icon {
+    background-color: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .social-link {
+    background-color: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+}
+
+body.dark-mode .input-wrapper {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(30, 41, 59, 0.4);
+}
+
+body.dark-mode .input-wrapper input,
+body.dark-mode .input-wrapper textarea {
+    color: #e5e7eb;
+}
+
+body.dark-mode .input-wrapper i {
+    color: #d1d5db;
+}
+
+body.dark-mode .form-success {
+    background-color: #2d3748;
+}
+
+body.dark-mode .form-success h3 {
+    background: linear-gradient(135deg, #60a5fa, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.dark-mode .form-success p {
+    color: #e5e7eb;
+}
+</style>
+
+<script>
+// Wait for DOM content to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Contact form submission handling
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+    const resetFormBtn = document.getElementById('resetForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission with loading state
+            const submitBtn = document.getElementById('submitForm');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const originalText = btnText.textContent;
+            
+            btnText.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call delay
+            setTimeout(function() {
+                formSuccess.classList.add('active');
+                contactForm.reset();
+                btnText.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+    }
+    
+    if (resetFormBtn) {
+        resetFormBtn.addEventListener('click', function() {
+            formSuccess.classList.remove('active');
+        });
+    }
+    
+    // Service card interactions
+    const serviceCards = document.querySelectorAll('.service-card');
+    
+    serviceCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.classList.add('hovered');
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.classList.remove('hovered');
+        });
+        
+        const serviceBtn = card.querySelector('.service-cta');
+        if (serviceBtn) {
+            serviceBtn.addEventListener('click', function() {
+                // Modal could be added here in the future
+                alert('More details about this service will be available soon.');
+            });
+        }
+    });
+    
+    // Add floating animation to contact icons
+    const contactIcons = document.querySelectorAll('.contact-icon');
+    
+    contactIcons.forEach((icon, index) => {
+        icon.style.animationDelay = `${index * 0.2}s`;
+        icon.classList.add('float-animation');
+    });
+    
+    // Add intersection observer for animations if not already initialized
+    if (typeof AOS === 'object' && AOS.refresh) {
+        AOS.refresh();
+    }
+});
+</script>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zimra Tax Information</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+        /* Light mode colors (default) */
+        --green: #2563eb; /* Primary blue */
+        --dark-green: #1e40af; /* Dark blue */
+        --light-green: #dbeafe; /* Light blue */
+        --yellow: #10b981; /* Primary green */
+        --gold: #10b981; /* Primary green maintained for consistency */
+        --white: #FFFFFF;
+        --black: #000000;
+        --gray: #374151; /* Text color */
+        --light-gray: #f9fafb;
+        --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        
+        /* Dark mode colors will be applied via prefers-color-scheme media query */
+    }
+    
+    /* Dark mode color scheme */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --green: #3b82f6; /* Lighter blue for dark mode */
+            --dark-green: #1d4ed8; /* Adjusted dark blue */
+            --light-green: #93c5fd; /* Lighter blue shade */
+            --yellow: #34d399; /* Brighter green */
+            --gold: #34d399; /* Brighter green maintained for consistency */
+            --gray: #e5e7eb; /* Lighter text for dark backgrounds */
+            --light-gray: #1f2937; /* Dark background */
+        }
+    }
+    
+    /* Manual dark mode class (for toggle switch functionality) */
+    .dark-mode {
+        --green: #3b82f6; /* Lighter blue for dark mode */
+        --dark-green: #1d4ed8; /* Adjusted dark blue */
+        --light-green: #93c5fd; /* Lighter blue shade */
+        --yellow: #34d399; /* Brighter green */
+        --gold: #34d399; /* Brighter green maintained for consistency */
+        --gray: #e5e7eb; /* Lighter text for dark backgrounds */
+        --light-gray: #1f2937; /* Dark background */
+    }
+    
+    
+    /* Tax Info Section */
+    .tax-info-section {
+        background: linear-gradient(135deg, var(--green), var(--dark-green));
+        color: var(--white);
+        position: relative;
+        padding: 100px 0 80px;
+        overflow: hidden;
+    }
+    
+    .section-waves {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        z-index: 1;
+    }
+    
+    .section-waves svg path {
+        fill: var(--dark-green);
+        fill-opacity: 1;
+    }
+    
+    .section-gradient {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 400px;
+        background: radial-gradient(circle at 100% 100%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                   radial-gradient(circle at 0% 0%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        opacity: 0.6;
+        z-index: 0;
+    }
+    
+    .tax-info-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+    }
+    
+    .tax-types-container, 
+    .filing-timeline-container {
+        flex: 1;
+        min-width: 300px;
+        animation: fadeIn 0.8s ease-out;
+    }
+    
+    /* Section Headers */
+    .section-header {
+        margin-bottom: 50px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .section-badge {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 0.75rem;
+        margin-bottom: 20px;
+        display: inline-block;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(0);
+        transition: var(--transition);
+        cursor: default;
+    }
+    
+    .section-header:hover .section-badge {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, var(--light-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        transform: translateY(0);
+        transition: var(--transition);
+    }
+    
+    .section-header:hover .section-title {
+        transform: translateY(-3px);
+    }
+    
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 700px;
+        margin: 0 auto;
+        font-weight: 300;
+    }
+    
+    /* Tax Types Carousel */
+    .tax-slider {
+        position: relative;
+        width: 100%;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        height: 580px;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .tax-slider {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .tax-slider {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .tax-track {
+        position: relative;
+        height: 100%;
+        width: 300%;
+        display: flex;
+        transition: transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+    }
+    
+    .tax-card {
+        position: relative;
+        width: 33.333%;
+        height: 100%;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        opacity: 0.6;
+        transform: scale(0.9);
+        transition: var(--transition);
+    }
+    
+    .tax-card.active {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    .tax-image {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        margin-bottom: 25px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .tax-image::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%);
+    }
+    
+    .tax-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1.5s ease;
+    }
+    
+    .tax-card:hover .tax-image img {
+        transform: scale(1.1);
+    }
+    
+    .tax-flag {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--yellow);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--white);
+        font-size: 1.4rem;
+        z-index: 3;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        transform: translateY(0) rotate(0deg);
+        transition: var(--transition);
+    }
+    
+    .tax-card:hover .tax-flag {
+        transform: translateY(-5px) rotate(360deg);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    
+    .tax-content {
+        padding: 0;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .tax-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--white);
+        transition: var(--transition);
+    }
+    
+    .tax-card:hover .tax-name {
+        transform: translateX(5px);
+    }
+    
+    .tax-title {
+        font-size: 1.2rem;
+        color: var(--light-green);
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: var(--transition);
+    }
+    
+    .tax-card:hover .tax-title {
+        transform: translateX(5px);
+    }
+    
+    .tax-quote {
+        margin-bottom: 30px;
+        position: relative;
+        padding-left: 25px;
+        border-left: 3px solid rgba(255, 255, 255, 0.3);
+        flex-grow: 1;
+    }
+    
+    .tax-quote i {
+        position: absolute;
+        top: -5px;
+        left: -15px;
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 1.5rem;
+        transition: var(--transition);
+    }
+    
+    .tax-card:hover .tax-quote i {
+        transform: translateY(-3px);
+        color: rgba(16, 185, 129, 0.5);
+    }
+    
+    .tax-quote p {
+        font-style: italic;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.05rem;
+    }
+    
+    .tax-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .tax-badge {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 8px 16px;
+        border-radius: 0.75rem;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: var(--transition);
+        cursor: default;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .tax-badge {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .tax-badge {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .tax-badge:hover {
+        background-color: var(--yellow);
+        color: var(--white);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .tax-navigation {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        z-index: 10;
+    }
+    
+    .tax-nav-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        color: var(--white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .tax-nav-btn {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .tax-nav-btn {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .tax-nav-btn:hover {
+        background-color: var(--yellow);
+        color: var(--white);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .tax-indicators {
+        display: flex;
+        gap: 12px;
+    }
+    
+    .tax-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .tax-indicator.active {
+        background-color: var(--yellow);
+        transform: scale(1.3);
+    }
+    
+    .tax-indicator:hover {
+        background-color: var(--white);
+    }
+    
+    /* Timeline Styles */
+    .timeline {
+        position: relative;
+        padding: 20px 0;
+        margin-bottom: 30px;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 34px;
+        height: 100%;
+        width: 3px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(16, 185, 129, 0.3) 100%);
+        border-radius: 3px;
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-left: 85px;
+        padding-bottom: 50px;
+        opacity: 0.6;
+        transform: translateX(-10px);
+        transition: var(--transition);
+    }
+    
+    .timeline-item.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .timeline-item:last-child {
+        padding-bottom: 0;
+    }
+    
+    .timeline-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        z-index: 1;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: var(--transition);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .timeline-icon {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .timeline-icon {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .timeline-item.active .timeline-icon,
+    .timeline-item:hover .timeline-icon {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .timeline-item.active .timeline-icon,
+        .timeline-item:hover .timeline-icon {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    }
+    
+    .dark-mode .timeline-item.active .timeline-icon,
+    .dark-mode .timeline-item:hover .timeline-icon {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .timeline-icon-inner {
+        width: 50px;
+        height: 50px;
+        background-color: var(--yellow);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--white);
+        font-size: 1.3rem;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .timeline-item.active .timeline-icon-inner,
+    .timeline-item:hover .timeline-icon-inner {
+        transform: scale(1.1) rotate(360deg);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    
+    .timeline-content {
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition: var(--transition);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .timeline-content {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .timeline-content {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .timeline-item.active .timeline-content,
+    .timeline-item:hover .timeline-content {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .timeline-item.active .timeline-content,
+        .timeline-item:hover .timeline-content {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    }
+    
+    .dark-mode .timeline-item.active .timeline-content,
+    .dark-mode .timeline-item:hover .timeline-content {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .timeline-content::before {
+        content: '';
+        position: absolute;
+        top: 25px;
+        left: -10px;
+        width: 20px;
+        height: 20px;
+        background-color: inherit;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        transform: rotate(45deg);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .timeline-content::before {
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .timeline-content::before {
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .timeline-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: var(--white);
+        transition: var(--transition);
+    }
+    
+    .timeline-item.active .timeline-title,
+    .timeline-item:hover .timeline-title {
+        transform: translateX(5px);
+    }
+    
+    .timeline-date {
+        font-size: 1rem;
+        color: var(--light-green);
+        margin-bottom: 20px;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+    
+    .timeline-item.active .timeline-date,
+    .timeline-item:hover .timeline-date {
+        transform: translateX(5px);
+    }
+    
+    .timeline-description p {
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+    }
+    
+    .timeline-navigation {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .timeline-btn {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .timeline-btn {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dark-mode .timeline-btn {
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .timeline-btn:hover, .timeline-btn.active {
+        background-color: var(--yellow);
+        color: var(--white);
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    
+    /* Dark mode toggle switch */
+
+    
+    /* Responsive Styles */
+    @media (max-width: 1200px) {
+        .tax-info-container {
+          flex-direction: column;
+        }
+        
+        .tax-types-container, 
+        .filing-timeline-container {
+          width: 100%;
+          max-width: 100%;
+        }
+        
+        .tax-slider {
+          height: 550px;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .tax-info-container {
+          padding: 0 1.5rem;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .timeline::before {
+          left: 24px;
+        }
+    
+        .timeline-item {
+          padding-left: 65px;
+        }
+    
+        .timeline-icon {
+          width: 50px;
+          height: 50px;
+        }
+    
+        .timeline-icon-inner {
+          width: 35px;
+          height: 35px;
+          font-size: 1rem;
+        }
+        
+        .tax-slider {
+          height: 520px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .tax-info-section {
+          padding: 4rem 0 3rem;
+        }
+      
+        .section-title {
+          font-size: 1.5rem;
+        }
+    
+        .timeline-navigation {
+          gap: 10px;
+        }
+    
+        .timeline-btn {
+          padding: 0.875rem;
+          font-size: 0.95rem;
+        }
+        
+        .tax-details {
+          justify-content: center;
+        }
+        
+        .tax-slider {
+          height: 570px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .tax-info-section {
+          padding: 3rem 0 2rem;
+        }
+        
+        .tax-info-container {
+          padding: 0 1rem;
+        }
+    
+        .section-badge {
+          font-size: 0.8rem;
+          padding: 6px 15px;
+        }
+    
+        .section-title {
+          font-size: 1.25rem;
+        }
+    
+        .section-subtitle {
+          font-size: 0.95rem;
+        }
+    
+        .tax-name {
+          font-size: 1.25rem;
+        }
+    
+        .timeline-item {
+          padding-left: 50px;
+        }
+    
+        .timeline::before {
+          left: 19px;
+        }
+    
+        .timeline-icon {
+          width: 40px;
+          height: 40px;
+        }
+    
+        .timeline-icon-inner {
+          width: 30px;
+          height: 30px;
+          font-size: 0.9rem;
+        }
+    
+        .timeline-content {
+          padding: 1.25rem;
+        }
+    
+        .timeline-title {
+          font-size: 1.2rem;
+        }
+        
+        .timeline-btn {
+          flex: 1;
+          padding: 0.875rem;
+          font-size: 0.85rem;
+        }
+        
+        .tax-slider {
+          height: 600px;
+        }
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+
+  <!-- SECTION 2: ZIMRA TAX INFORMATION -->
+  <!-- SECTION 2: ZIMRA FDMS AND VIRTUAL DEVICES SYSTEM -->
+<section class="tax-info-section" id="tax-information">
+    <div class="section-waves">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#006B3F" fill-opacity="1" d="M0,128L48,117.3C96,107,192,85,288,90.7C384,96,480,128,576,144C672,160,768,160,864,138.7C960,117,1056,75,1152,69.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+      </svg>
+    </div>
+  
+    <div class="particles" id="particles"></div>
+    <div class="section-gradient"></div>
+  
+    <div class="tax-info-container">
+      <div class="tax-types-container">
+        <div class="section-header light">
+          <div class="section-badge">Fiscal Solutions</div>
+          <h2 class="section-title">FDMS API</h2>
+          <p class="section-subtitle">Understanding ZIMRA's Fiscal Data Management System</p>
+        </div>
+  
+        <div class="tax-slider">
+          <div class="tax-track" id="taxTrack">
+            <div class="tax-card">
+              <div class="tax-image">
+                <img src="img\tax1.jpg" alt="FDMS API Overview">
+                <div class="tax-flag">
+                  <i class="fas fa-server"></i>
+                </div>
+              </div>
+              <div class="tax-content">
+                <h3 class="tax-name">FDMS API Overview</h3>
+                <p class="tax-title">Real-time Fiscal Integration</p>
+                <div class="tax-quote">
+                  <i class="fas fa-quote-left"></i>
+                  <p>The FDMS API enables direct communication between fiscal devices and ZIMRA's central system. This allows for real-time transaction monitoring and reporting to improve tax compliance.</p>
+                </div>
+                <div class="tax-details">
+                  <span class="tax-badge">REST API</span>
+                  <span class="tax-badge">JSON Format</span>
+                  <span class="tax-badge">SSL Encrypted</span>
+                </div>
+              </div>
+            </div>
+  
+            <div class="tax-card">
+              <div class="tax-image">
+                <img src="img\tax2.jpg" alt="API Authentication">
+                <div class="tax-flag">
+                  <i class="fas fa-key"></i>
+                </div>
+              </div>
+              <div class="tax-content">
+                <h3 class="tax-name">API Authentication</h3>
+                <p class="tax-title">Secure Access Protocols</p>
+                <div class="tax-quote">
+                  <i class="fas fa-quote-left"></i>
+                  <p>All API interactions require secure authentication. Businesses must register their devices to receive API credentials, including unique device IDs and digital signatures for transaction verification.</p>
+                </div>
+                <div class="tax-details">
+                  <span class="tax-badge">OAuth 2.0</span>
+                  <span class="tax-badge">JWT Tokens</span>
+                  <span class="tax-badge">Key Rotation</span>
+                </div>
+              </div>
+            </div>
+  
+            <div class="tax-card">
+              <div class="tax-image">
+                <img src="img\tax3.jpg" alt="Transaction Endpoints">
+                <div class="tax-flag">
+                  <i class="fas fa-exchange-alt"></i>
+                </div>
+              </div>
+              <div class="tax-content">
+                <h3 class="tax-name">Transaction Endpoints</h3>
+                <p class="tax-title">Core API Functions</p>
+                <div class="tax-quote">
+                  <i class="fas fa-quote-left"></i>
+                  <p>The API provides endpoints for submitting sales transactions, issuing fiscal receipts, generating Z-reports, and synchronizing tax rates. All transactions receive a fiscal signature from ZIMRA for validation.</p>
+                </div>
+                <div class="tax-details">
+                  <span class="tax-badge">/transactions</span>
+                  <span class="tax-badge">/receipts</span>
+                  <span class="tax-badge">/reports</span>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="tax-navigation">
+            <button class="tax-nav-btn prev" id="taxPrev">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="tax-indicators">
+              <span class="tax-indicator active" data-index="0"></span>
+              <span class="tax-indicator" data-index="1"></span>
+              <span class="tax-indicator" data-index="2"></span>
+            </div>
+            <button class="tax-nav-btn next" id="taxNext">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="filing-timeline-container">
+        <div class="section-header light">
+          <div class="section-badge">Virtual Solutions</div>
+          <h2 class="section-title">Virtual Devices System</h2>
+          <p class="section-subtitle">ZIMRA's digital fiscal management solution</p>
+        </div>
+  
+        <div class="timeline">
+          <div class="timeline-item active" data-step="1">
+            <div class="timeline-icon">
+              <div class="timeline-icon-inner">
+                <i class="fas fa-tablet-alt"></i>
+              </div>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Virtual Fiscal Devices</h3>
+              <p class="timeline-date">Digital Solution</p>
+              <div class="timeline-description">
+                <p>ZIMRA's Virtual Devices System allows businesses to use software-based fiscal solutions instead of physical devices. This cloud-based system offers flexibility while ensuring tax compliance for all transactions.</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="timeline-item" data-step="2">
+            <div class="timeline-icon">
+              <div class="timeline-icon-inner">
+                <i class="fas fa-file-invoice"></i>
+              </div>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Electronic Receipting</h3>
+              <p class="timeline-date">Real-time Compliance</p>
+              <div class="timeline-description">
+                <p>The system generates fiscalized electronic receipts with QR codes that can be verified through ZIMRA's portal. Each receipt contains a unique fiscal signature validating the transaction with tax authorities.</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="timeline-item" data-step="3">
+            <div class="timeline-icon">
+              <div class="timeline-icon-inner">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Reporting Dashboard</h3>
+              <p class="timeline-date">Business Intelligence</p>
+              <div class="timeline-description">
+                <p>Businesses gain access to a comprehensive reporting dashboard showing sales trends, tax obligations, and compliance status. The system automatically generates VAT returns and fiscal reports required by ZIMRA.</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="timeline-item" data-step="4">
+            <div class="timeline-icon">
+              <div class="timeline-icon-inner">
+                <i class="fas fa-cogs"></i>
+              </div>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Integration Options</h3>
+              <p class="timeline-date">Flexible Implementation</p>
+              <div class="timeline-description">
+                <p>The system offers multiple integration options including direct API access, SDK libraries for popular programming languages, and ready-made plugins for common POS and ERP systems used in Zimbabwe.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="timeline-navigation">
+          <button class="timeline-btn active" data-step="1">Virtual Devices</button>
+          <button class="timeline-btn" data-step="2">E-Receipts</button>
+          <button class="timeline-btn" data-step="3">Reporting</button>
+          <button class="timeline-btn" data-step="4">Integration</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // Tax Types Carousel
+    const taxTrack = document.getElementById('taxTrack');
+    const taxPrev = document.getElementById('taxPrev');
+    const taxNext = document.getElementById('taxNext');
+    const taxIndicators = document.querySelectorAll('.tax-indicator');
+    const taxCards = document.querySelectorAll('.tax-card');
+    let currentTaxSlide = 0;
+  
+    function initTaxCarousel() {
+      taxCards[currentTaxSlide].classList.add('active');
+      updateTaxCarousel();
+    }
+  
+    function updateTaxCarousel() {
+      taxTrack.style.transform = `translateX(${-currentTaxSlide * (100 / taxCards.length)}%)`;
+      
+      // Update indicators
+      taxIndicators.forEach((indicator, index) => {
+        if (index === currentTaxSlide) {
+          indicator.classList.add('active');
+        } else {
+          indicator.classList.remove('active');
+        }
+      });
+      
+      // Update active class on cards
+      taxCards.forEach((card, index) => {
+        if (index === currentTaxSlide) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+    }
+  
+    taxNext.addEventListener('click', () => {
+      currentTaxSlide = (currentTaxSlide + 1) % taxCards.length;
+      updateTaxCarousel();
+    });
+  
+    taxPrev.addEventListener('click', () => {
+      currentTaxSlide = (currentTaxSlide - 1 + taxCards.length) % taxCards.length;
+      updateTaxCarousel();
+    });
+  
+    taxIndicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        currentTaxSlide = index;
+        updateTaxCarousel();
+      });
+    });
+  
+    // Timeline Navigation
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const timelineButtons = document.querySelectorAll('.timeline-btn');
+  
+    function activateTimelineStep(step) {
+      // Update timeline items
+      timelineItems.forEach(item => {
+        if (item.dataset.step === step) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      
+      // Update timeline buttons
+      timelineButtons.forEach(btn => {
+        if (btn.dataset.step === step) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+  
+    timelineButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const step = button.dataset.step;
+        activateTimelineStep(step);
+      });
+    });
+  
+    // Create floating particles
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      const particleCount = 20;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('span');
+        particle.className = 'particle';
+        
+        // Random size between 5px and 20px
+        const size = Math.random() * 15 + 5;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        
+        // Random opacity
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        // Random animation duration between 15s and 30s
+        const duration = Math.random() * 15 + 15;
+        particle.style.animationDuration = `${duration}s`;
+        
+        // Random animation delay
+        const delay = Math.random() * 5;
+        particle.style.animationDelay = `${delay}s`;
+        
+        particles.appendChild(particle);
+      }
+    }
+  
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      initTaxCarousel();
+      createParticles();
+      
+      // Auto-rotate tax carousel
+      setInterval(() => {
+        if (!document.hidden) {
+          currentTaxSlide = (currentTaxSlide + 1) % taxCards.length;
+          updateTaxCarousel();
+        }
+      }, 5000);
+    });
+    
+  </script>
+
+
+
+
+
+      <!-- Process Section -->
+<section class="process-section" id="process">
+    <div class="process-container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-tag"><i class="fas fa-chart-line"></i> Our Process</span>
+            <h2 class="section-title">How Fiscal Gateway</span> Works</h2>
+            <p class="section-description">A simple yet powerful process to ensure your business stays compliant with ZIMRA regulations.</p>
+        </div>
+        
+        <div class="process-steps">
+            <div class="process-line"></div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-icon"><i class="fas fa-plug"></i></div>
+                    <h3 class="step-title">Connect</h3>
+                    <p class="step-description">Seamlessly integrate your existing accounting software with our platform with just a few clicks.</p>
+                    <div class="step-card-overlay">
+                        <h4>Integration Benefits</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> No duplicate data entry</li>
+                            <li><i class="fas fa-check-circle"></i> Works with popular software</li>
+                            <li><i class="fas fa-check-circle"></i> Quick setup process</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h3 class="step-title">Configure</h3>
+                    <p class="step-description">Set up your tax settings and business rules according to your specific requirements.</p>
+                    <div class="step-card-overlay">
+                        <h4>Configuration Options</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Tax rate customization</li>
+                            <li><i class="fas fa-check-circle"></i> Business rule automation</li>
+                            <li><i class="fas fa-check-circle"></i> Document workflow setup</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-icon"><i class="fas fa-file-invoice"></i></div>
+                    <h3 class="step-title">Process</h3>
+                    <p class="step-description">Your invoices are automatically processed and formatted to meet ZIMRA requirements.</p>
+                    <div class="step-card-overlay">
+                        <h4>Processing Features</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Real-time validation</li>
+                            <li><i class="fas fa-check-circle"></i> Error detection</li>
+                            <li><i class="fas fa-check-circle"></i> Batch processing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
+                    <h3 class="step-title">Submit</h3>
+                    <p class="step-description">We handle the direct submission to ZIMRA FDMS API, ensuring compliance and confirmation.</p>
+                    <div class="step-card-overlay">
+                        <h4>Submission Benefits</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Secure transmission</li>
+                            <li><i class="fas fa-check-circle"></i> Digital receipts</li>
+                            <li><i class="fas fa-check-circle"></i> Audit trail</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="process-step" data-aos="fade-up" data-aos-delay="500">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <div class="step-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3 class="step-title">Monitor</h3>
+                    <p class="step-description">Track your compliance status, view reports and stay on top of your tax obligations.</p>
+                    <div class="step-card-overlay">
+                        <h4>Monitoring Tools</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Real-time dashboard</li>
+                            <li><i class="fas fa-check-circle"></i> Compliance reports</li>
+                            <li><i class="fas fa-check-circle"></i> Tax calendar alerts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="process-cta" data-aos="fade-up">
+            <a href="#contact" class="process-cta-button">Start Your Compliance Journey Today <i class="fas fa-long-arrow-alt-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Process Section Styles */
+.process-section {
+    padding: 100px 0;
+    background-color: var(--light-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+.process-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--primary-green);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.section-description {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.process-steps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin-bottom: 80px;
+}
+
+.process-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-blue), var(--primary-green));
+    transform: translateX(-50%);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.process-step {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+}
+
+.process-step:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    transition: var(--transition);
+}
+
+.process-step:hover .step-number {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 15px 25px rgba(37, 99, 235, 0.4);
+}
+
+.step-content {
+    width: 45%;
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: var(--card-shadow);
+    margin-left: auto;
+    margin-right: 5%;
+    position: relative;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.process-step:nth-child(even) .step-content {
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+.process-step:hover .step-content {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.step-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    transition: var(--transition);
+}
+
+.process-step:hover .step-icon {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    transform: rotate(10deg);
+}
+
+.step-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.step-description {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.step-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    opacity: 0;
+    transition: var(--transition);
+    transform: translateY(20px);
+    border-radius: 15px;
+}
+
+.process-step:hover .step-card-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.step-card-overlay h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.step-card-overlay h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-green);
+    border-radius: 3px;
+}
+
+.step-card-overlay ul {
+    list-style: none;
+    padding: 0;
+}
+
+.step-card-overlay li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.step-card-overlay li i {
+    color: var(--primary-green);
+}
+
+.process-cta {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.process-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.process-cta-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+}
+
+.process-cta-button i {
+    transition: var(--transition);
+}
+
+.process-cta-button:hover i {
+    transform: translateX(5px);
+}
+
+/* Dark Mode Adjustments */
+body.dark-mode .process-section {
+    background-color: #111827;
+}
+
+body.dark-mode .section-title {
+    color: #e5e7eb;
+}
+
+body.dark-mode .section-description {
+    color: #d1d5db;
+}
+
+body.dark-mode .step-content {
+    background-color: #1f2937;
+}
+
+body.dark-mode .step-title {
+    color: #e5e7eb;
+}
+
+body.dark-mode .step-description {
+    color: #d1d5db;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .section-title {
+        font-size: 2.3rem;
+    }
+    
+    .process-line {
+        left: 30px;
+    }
+    
+    .process-step, .process-step:nth-child(even) {
+        flex-direction: row;
+    }
+    
+    .step-number {
+        left: 30px;
+    }
+    
+    .step-content, .process-step:nth-child(even) .step-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .process-section {
+        padding: 70px 0;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-description {
+        font-size: 1.1rem;
+    }
+    
+    .process-steps {
+        gap: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .step-content {
+        padding: 20px;
+    }
+    
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .step-title {
+        font-size: 1.3rem;
+    }
+    
+    .process-cta-button {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+}
+</style>
+
+<script>
+// Add event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Process step hover effect for mobile devices
+    const processSteps = document.querySelectorAll('.process-step');
+    
+    processSteps.forEach(step => {
+        step.addEventListener('click', function() {
+            // Toggle active state on mobile devices
+            if (window.innerWidth <= 768) {
+                this.classList.toggle('active');
+                
+                // Reset other steps
+                processSteps.forEach(otherStep => {
+                    if (otherStep !== step) {
+                        otherStep.classList.remove('active');
+                    }
+                });
+            }
+        });
+    });
+    
+    // Animate numbers when they come into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add scroll animation for process line
+                document.querySelector('.process-line').style.animation = 'growLine 1.5s ease-out forwards';
+                
+                // Start the animation for process steps
+                const steps = document.querySelectorAll('.process-step');
+                steps.forEach((step, index) => {
+                    setTimeout(() => {
+                        step.classList.add('animate-step');
+                    }, 300 * (index + 1));
+                });
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    // Observe the process section
+    const processSection = document.querySelector('.process-section');
+    if (processSection) {
+        observer.observe(processSection);
+    }
+});
+
+// Add CSS animation for line growth via JavaScript
+document.head.insertAdjacentHTML('beforeend', `
+<style>
+@keyframes growLine {
+    from {
+        height: 0;
+    }
+    to {
+        height: 100%;
+    }
+}
+
+.process-line {
+    height: 0;
+}
+
+.process-step {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.process-step.animate-step {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* For mobile devices - active state */
+@media (max-width: 768px) {
+    .process-step.active .step-card-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+`);
+</script>
+
+
+
+
+
+<section class="clients">
+    <h2 style="text-align: center; color: #3669C9; margin-bottom: 2rem;">Our Trusted Clients</h2>
+    <div class="logo-carousel">
+        <div class="logo-slide">
+            <div class="logo-container">
+                <img src="img/logo1.jpeg" alt="Client Logo 1" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo2.jpeg" alt="Client Logo 2" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo3.jpeg" alt="Client Logo 3" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo4.jpeg" alt="Client Logo 4" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo5.jpeg" alt="Client Logo 5" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo6.jpeg" alt="Client Logo 6" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo7.jpeg" alt="Client Logo 7" class="client-logo">
+            </div>
+            <div class="logo-container">
+                <img src="img/logo8.jpeg" alt="Client Logo 8" class="client-logo">
+            </div>
+            <!-- Duplicate logos for seamless scrolling will be handled by JavaScript -->
+        </div>
+    </div>
+</section>
+
+<style>
+.clients {
+    margin: 4rem 0;
+    overflow: hidden;
+    background: white;
+    padding: 2rem 0;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(54, 105, 201, 0.1);
+}
+
+body.dark-mode .clients {
+    background: #1f2937;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .clients h2 {
+    color: #60a5fa;
+}
+
+.logo-carousel {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.logo-slide {
+    display: inline-block;
+    animation: scroll 20s linear infinite;
+}
+
+.logo-container {
+    display: inline-block;
+    height: 120px;
+    width: 160px;
+    margin: 0 2rem;
+    vertical-align: middle;
+    background: #f8f9fa;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .logo-container {
+    background: #2d3748;
+}
+
+.client-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.logo-container:hover {
+    box-shadow: 0 10px 15px -3px rgba(54, 105, 201, 0.2);
+    transform: translateY(-5px);
+}
+
+.logo-container:hover .client-logo {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause animation on hover */
+.logo-carousel:hover .logo-slide {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .logo-container {
+        height: 100px;
+        width: 140px;
+        margin: 0 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-container {
+        height: 80px;
+        width: 120px;
+        margin: 0 1rem;
+    }
+    
+    .clients {
+        padding: 1.5rem 0;
+        margin: 3rem 0;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const logoSlide = document.querySelector('.logo-slide');
+    
+    // Clone the slide content for seamless scrolling
+    logoSlide.innerHTML += logoSlide.innerHTML;
+
+    // Adjust animation speed based on screen width
+    function adjustSpeed() {
+        const speed = window.innerWidth < 768 ? '15s' : '20s';
+        logoSlide.style.animation = `scroll ${speed} linear infinite`;
+    }
+
+    // Initial speed adjustment and listener for window resize
+    adjustSpeed();
+    window.addEventListener('resize', adjustSpeed);
+});
+</script>
+    
+ 
+
+
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-container">
+            <!-- Animated Background Elements -->
+            <div class="footer-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            
+            <div class="footer-grid">
+                <div class="footer-column about-column">
+                    <div class="footer-logo">
+                        <img src="img/logo.png" alt="Fiscal Gateway Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">FISCAL GATEWAY</span>
+                    </div>
+                    <p class="footer-about-text">
+                        Zimbabwe's premier fiscal solution that seamlessly connects your accounting software with 
+                        ZIMRA's FDMS API, ensuring tax compliance while saving you time and reducing errors.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><span class="link-icon">⟶</span> Home</a></li>
+                        <li><a href="#services"><span class="link-icon">⟶</span> Services</a></li>
+                        <li><a href="#about"><span class="link-icon">⟶</span> About Us</a></li>
+                        <li><a href="#integrations"><span class="link-icon">⟶</span> Integrations</a></li>
+                        <li><a href="#contact"><span class="link-icon">⟶</span> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="footer-title">Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><span class="link-icon">⟶</span> ZIMRA API Integration</a></li>
+                        <li><a href="#"><span class="link-icon">⟶</span> Tax Compliance Solutions</a></li>
+                        <li><a href="#"><span class="link-icon">⟶</span> Software Setup & Training</a></li>
+                        <li><a href="#"><span class="link-icon">⟶</span> Technical Support</a></li>
+                        <li><a href="#"><span class="link-icon">⟶</span> Custom Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column contact-column">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Construction House, Harare, Zimbabwe</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+263 775 569 0005</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@fiscalgateway.co.zw</span>
+                        </li>
+                    </ul>
+                    <div class="newsletter">
+                        <h4 class="newsletter-title">Subscribe to Our Newsletter</h4>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your Email Address" required>
+                            <button type="submit" class="newsletter-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wave-divider">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="footer-wave-fill"></path>
+        </svg>
+    </div>
+    <div class="footer-bottom">
+        <div class="footer-container">
+            <p class="copyright">© 2025 Fiscal Gateway. All Rights Reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+</footer>
+
+<!-- CSS Styles for the Footer -->
+<style>
+    .footer {
+        background-color: #111827;
+        color: #f9fafb;
+        position: relative;
+        z-index: 10;
+        font-family: 'Poppins', 'Segoe UI', sans-serif;
+    }
+
+    .footer-top {
+        padding: 6rem 2rem 3rem;
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated background shapes */
+    .footer-shapes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        animation: float 15s infinite ease-in-out;
+    }
+
+    .shape-1 {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        right: -50px;
+        animation-duration: 25s;
+    }
+
+    .shape-2 {
+        width: 200px;
+        height: 200px;
+        bottom: -100px;
+        left: 10%;
+        animation-delay: 5s;
+        animation-duration: 30s;
+    }
+
+    .shape-3 {
+        width: 150px;
+        height: 150px;
+        top: 20%;
+        left: 30%;
+        animation-delay: 7s;
+        animation-duration: 20s;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+            transform: translate(10px, 15px) rotate(5deg);
+        }
+        50% {
+            transform: translate(5px, 10px) rotate(10deg);
+        }
+        75% {
+            transform: translate(15px, -5px) rotate(5deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+    }
+
+    .footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+        gap: 3rem;
+    }
+
+    .footer-column {
+        position: relative;
+        z-index: 2;
+    }
+
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.8rem;
+    }
+
+    .footer-logo-img {
+        height: 45px;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+        transition: transform 0.3s ease;
+    }
+
+    .footer-logo:hover .footer-logo-img {
+        transform: scale(1.05);
+    }
+
+    .footer-logo-text {
+        margin-left: 1rem;
+        font-size: 1.65rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to right, #ffffff, #a5f3fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .footer-about-text {
+        line-height: 1.8;
+        margin-bottom: 1.8rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 1.02rem;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-link::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #10b981, #059669);
+        top: 100%;
+        left: 0;
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    .social-link:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .social-link:hover::before {
+        top: 0;
+    }
+
+    .social-link i {
+        font-size: 1.1rem;
+        z-index: 1;
+    }
+
+    .footer-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 1.7rem;
+        position: relative;
+        padding-bottom: 0.9rem;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, #10b981, #059669);
+        border-radius: 3px;
+        box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 1rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .footer-links li:hover {
+        transform: translateX(8px);
+    }
+
+    .footer-links a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: block;
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .link-icon {
+        display: inline-block;
+        margin-right: 10px;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+        color: #10b981;
+        font-weight: bold;
+    }
+
+    .footer-links a:hover {
+        color: #10b981;
+    }
+
+    .footer-links a:hover .link-icon {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .contact-info {
+        list-style: none;
+        padding: 0;
+    }
+
+    .contact-info li {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1.4rem;
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+    }
+
+    .contact-info li:hover {
+        transform: translateX(5px);
+    }
+
+    .contact-info i {
+        margin-right: 1rem;
+        color: #10b981;
+        margin-top: 5px;
+        font-size: 1.1rem;
+        background-color: rgba(16, 185, 129, 0.1);
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .contact-info li:hover i {
+        background-color: #10b981;
+        color: white;
+    }
+
+    .newsletter {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border-left: 4px solid #10b981;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .newsletter:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        transform: translateY(-5px);
+    }
+
+    .newsletter-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: white;
+    }
+
+    .newsletter-form {
+        display: flex;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .newsletter-form input {
+        flex: 1;
+        padding: 1rem 1.2rem;
+        border: none;
+        border-radius: 6px 0 0 6px;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #111827;
+        outline: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .newsletter-form input::placeholder {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .newsletter-form input:focus {
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+    .newsletter-btn {
+        background: linear-gradient(to right, #10b981, #059669);
+        color: white;
+        border: none;
+        padding: 0 1.5rem;
+        border-radius: 0 6px 6px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+
+    .newsletter-btn:hover {
+        background: linear-gradient(to right, #059669, #047857);
+        transform: translateX(3px);
+    }
+
+    /* Wave divider */
+    .footer-wave-divider {
+        position: relative;
+        background: #0f172a;
+        height: 70px;
+    }
+
+    .footer-wave-divider svg {
+        position: absolute;
+        width: 100%;
+        height: 70px;
+        top: -70px;
+    }
+
+    .footer-wave-fill {
+        fill: #0f172a;
+    }
+
+    .footer-bottom {
+        background-color: #0f172a;
+        padding: 1.8rem 2rem;
+    }
+
+    .footer-bottom .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .copyright {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.95rem;
+    }
+
+    .footer-bottom-links {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .footer-bottom-links a {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        position: relative;
+    }
+
+    .footer-bottom-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #10b981;
+        transition: all 0.3s ease;
+    }
+
+    .footer-bottom-links a:hover {
+        color: #10b981;
+    }
+
+    .footer-bottom-links a:hover::after {
+        width: 100%;
+    }
+
+    .back-to-top {
+        position: fixed;
+        right: 30px;
+        bottom: -60px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 100;
+        opacity: 0;
+        box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .back-to-top.visible {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-10px) scale(1.05);
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
+
+    /* Enhanced animation for the back to top button */
+    .back-to-top i {
+        transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover i {
+        animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1200px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+        .about-column {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-top {
+            padding: 4rem 1.5rem 2rem;
+        }
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+        .footer-bottom .footer-container {
+            flex-direction: column;
+            gap: 1.2rem;
+            text-align: center;
+        }
+        .footer-wave-divider {
+            height: 50px;
+        }
+        .footer-wave-divider svg {
+            height: 50px;
+            top: -50px;
+        }
+        .back-to-top {
+            right: 20px;
+            width: 45px;
+            height: 45px;
+        }
+        .back-to-top.visible {
+            bottom: 20px;
+        }
+    }
+
+    /* Dark mode styling */
+    body.dark-mode .footer-top {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    body.dark-mode .footer-bottom,
+    body.dark-mode .footer-wave-fill {
+        background-color: #0a0f1a;
+        fill: #0a0f1a;
+    }
+</style>
+
+<!-- JavaScript for Back to Top Button and Animations -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Newsletter form animation and validation
+        const newsletterForm = document.querySelector('.newsletter-form');
+        const newsletterInput = newsletterForm.querySelector('input');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (newsletterInput.value.trim() !== '' && validateEmail(newsletterInput.value)) {
+                newsletterInput.value = '';
+                
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.classList.add('newsletter-success');
+                successMessage.textContent = 'Thank you for subscribing!';
+                successMessage.style.color = '#10b981';
+                successMessage.style.marginTop = '0.8rem';
+                successMessage.style.fontWeight = '500';
+                successMessage.style.padding = '0.5rem';
+                successMessage.style.textAlign = 'center';
+                successMessage.style.animation = 'fadeIn 0.5s ease';
+                
+                // Remove any existing success message
+                const existingMessage = document.querySelector('.newsletter-success');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                newsletterForm.parentNode.appendChild(successMessage);
+                
+                // Remove the success message after 3 seconds
+                setTimeout(() => {
+                    if (successMessage.parentNode) {
+                        successMessage.style.animation = 'fadeOut 0.5s ease';
+                        setTimeout(() => {
+                            successMessage.remove();
+                        }, 500);
+                    }
+                }, 3000);
+            } else {
+                // Show error for invalid email
+                newsletterInput.style.borderLeft = '3px solid #ef4444';
+                newsletterInput.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                
+                // Remove error styling after 2 seconds
+                setTimeout(() => {
+                    newsletterInput.style.borderLeft = 'none';
+                    newsletterInput.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                }, 2000);
+            }
+        });
+        
+        // Email validation function
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        
+        // Create fade animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add hover effect for footer links
+        const footerLinks = document.querySelectorAll('.footer-links a');
+        footerLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.link-icon');
+                if (icon) {
+                    icon.style.opacity = '1';
+                    icon.style.transform = 'translateX(0)';
+                }
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.link-icon');
+                if (icon) {
+                    icon.style.opacity = '0';
+                    icon.style.transform = 'translateX(-10px)';
+                }
+            });
+        });
+    });
+</script>
